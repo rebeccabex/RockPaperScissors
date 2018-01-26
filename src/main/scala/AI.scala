@@ -3,15 +3,18 @@ package rps
 class AI() extends Player() {
 
   override def choose(): String = {
-    var newChoice = ""
-    lastHand match {
-      case 0 => newChoice = chooseWithBias()
-      case 1 => newChoice = chooseWithBias(RPS.losesTo(lastChoice), 3)
-      case 2 => newChoice = chooseWithBias(RPS.beats(lastChoice), 3)
-      case _ => newChoice = chooseWithBias()
-    }
+    val newChoice = choosePreferred()
     lastChoice = newChoice
     newChoice
+  }
+
+  def choosePreferred(): String = {
+    lastHand match {
+      case 0 => chooseWithBias()
+      case 1 => chooseWithBias(RPS.losesTo(lastChoice), 3)
+      case 2 => chooseWithBias(RPS.beats(lastChoice), 3)
+      case _ => chooseWithBias()
+    }
   }
 
   def chooseWithBias(biasTowards: String = "", biasVal: Int = 0): String = {

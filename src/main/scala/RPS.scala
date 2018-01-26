@@ -5,7 +5,7 @@ object RPS {
   def rpsValue(choice: String): Int = choice.toLowerCase match {
     case "rock" => 1
     case "paper" => 2
-    case "scissors" => 3
+    case "scissors" => 0
     case _ => -1
   }
 

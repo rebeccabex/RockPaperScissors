@@ -11,10 +11,12 @@ object RockPaperScissors {
     var roundsPlayed = 0
 
     while (inGame) {
+      playing = true
+      roundsPlayed = 0
       getInput("What game do you want to play? 0 - quit, 1 - Human v AI, 2 - AI v AI: ").toInt match {
         case 0 => playing = false; inGame = false
         case 1 => players(0) = new Human()
-        case 2 => players(0) = new AI(); noOfRounds = getInput("How many rounds? ").toInt
+        case 2 => players(0) = new SmartAI(); noOfRounds = getInput("How many rounds? ").toInt
         case _ => println("Invalid entry");
       }
       players(1) = new AI()
@@ -28,26 +30,29 @@ object RockPaperScissors {
         if (players(0).isInstanceOf[Human])
           choices(0) match {
             case "quit" => playing = false
-            case "rock" | "paper" | "scissors" => playRound(choices(0), choices(1))
+            case "rock" | "paper" | "scissors" => playRound(choices)
             case _ => println("Invalid entry. Try again")
           }
         else if (roundsPlayed < noOfRounds) {
-          playRound(choices(0), choices(1))
+          playRound(choices)
           roundsPlayed += 1
         }
         else
           playing = false
       }
 
-      def playRound(p1Choice: String, p2Choice: String): Unit = {
-        print(p1Choice + " v " + p2Choice + ": ")
-        val winner = determineWinner(p1Choice, p2Choice)
+      def playRound(choices: Array[String]): Unit = {
+        print(choices(0) + " v " + choices(1) + ": ")
+        val winner = determineWinner(choices(0), choices(1))
         winner match {
           case 0 => println("Draw"); players(0).drew(); players(1).drew()
           case 1 => println("Player 1 won!"); players(0).won(); players(1).lost()
           case 2 => println("Player 2 won!"); players(1).won(); players(0).lost()
           case _ => println("Invalid entry. Try again")
         }
+        for (i <- 0 to 1)
+          if (players(i).isInstanceOf[SmartAI])
+            players(i).asInstanceOf[SmartAI].addToRecord(choices(-i+1), winner)
         println("Score: " + players(0).wins + "-" + players(1).wins)
       }
 
