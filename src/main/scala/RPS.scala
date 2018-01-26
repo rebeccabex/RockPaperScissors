@@ -10,9 +10,9 @@ object RPS {
   }
 
   def rpsChoiceFromVal(choiceValue: Int): String = choiceValue match {
-    case 1 => "rock"
-    case 2 => "paper"
-    case 0 | 3 => "scissors"
+    case x if x % 3 == 1 => "rock"
+    case x if x % 3 == 2 => "paper"
+    case x if x % 3 == 0 => "scissors"
     case _ => "error"
   }
 

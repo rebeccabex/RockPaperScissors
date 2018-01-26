@@ -1,6 +1,6 @@
 package rps
 
-abstract class Player(val number: Int) {
+abstract class Player() {
   var wins = 0
   var lastChoice = ""
   var lastHand = 0

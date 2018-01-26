@@ -1,6 +1,6 @@
 package rps
 
-class Human(number: Int) extends Player(number) {
+class Human() extends Player() {
 
   override def choose(): String = {
     readInput("Enter choice, or 'quit' to exit: ")

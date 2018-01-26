@@ -1,6 +1,6 @@
 package rps
 
-class AI(number: Int) extends Player(number) {
+class AI() extends Player() {
 
   override def choose(): String = {
     var newChoice = ""
